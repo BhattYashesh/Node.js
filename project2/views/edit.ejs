@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form  action="/updateData" method="post">
+        <input type="text" value="<%=singleData.id%>" name="id" hidden>
+        <input type="text" value="<%=singleData.task%>" name="task" placeholder="Enter the Task">
+        <select name="priority">
+            <option value="all" selected disabled>Priority</option>
+            <option value="High" name="high"  <%=singleData.priority == "High" ? "selected" : ""%>>High</option>
+            <option value="Medium" <%=singleData.priority == "Medium" ? "selected" : ""%> name="medium">Medium</option>
+            <option value="Low" name="low" <%=singleData.priority == "Low" ? "selected" : ""%> >Low</option>
+        </select>
+        <select name="status" id="">
+            <option selected disabled>Status</option>
+            <option value="Fulfill" name="fulfill" <%=singleData.priority == "Fulfill" ? "selected" : ""%>>Fulfilled</option>
+            <option value="Pending" name="pending" <%=singleData.priority == "Pending" ? "selected" : ""%>>Pending</option>
+        </select>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

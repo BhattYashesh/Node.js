@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+            width: 500px;
+        }
+       .form-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input[type="text"]{
+    width: 97%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background: #28a745;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background: #218838;
+}
+
+ .edit{
+   width: 80px;
+   height: 30px;
+  margin: 10px;
+   background-color: blue;
+   color: white;
+   border: 0;
+}
+.delete{
+   width: 80px;
+   height: 30px;
+  margin: 10px;
+  background-color: red;
+   color: white;
+   border: 0;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+        <form  action="/addData" method="post">
+            <input type="text" name="task" placeholder="Enter the Task" required>
+            <select name="priority" required >
+                <option value="all" selected disabled>Priority</option>
+                <option value="High" name="high">High</option>
+                <option value="Medium" name="medium">Medium</option>
+                <option value="Low" name="low">Low</option>
+            </select>
+            <select name="status" id="" required>
+                <option value="Fulfill" selected disabled>Status</option>
+                <option value="Fulfill" name="fulfill">Fulfilled</option>
+                <option value="Pending" name="pending">Pending</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form><br><br>
+
+        <table border="1" width="80%" style="margin: auto;">
+            <thead>
+                <th>id</th>
+                <th>Task</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th colspan="2">Actions</th>
+            </thead>
+            <%data.map((e,i)=>{%>
+            <tbody style="text-align: center;">
+                    <tr>
+                        <td><%=e.id%></td>
+                        <td><%=e.task%></td>
+                        <td><%=e.priority%></td>
+                        <td><%=e.status%></td>
+                        <td><a href="/editData/<%=e.id%>"><button class="edit">Edit</button></a></td>
+                        <td><a href="/deleteData/?id=<%=e.id%>"><button class="delete">Delete</button></a></td>
+                    </tr>
+                </tbody>
+                <%})%>
+        </table>
+    
+</body>
+</html>
