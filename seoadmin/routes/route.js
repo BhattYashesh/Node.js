@@ -15,5 +15,11 @@ route.post("/addAdmindata",multer,ctl.addAdmindata)
 route.get("/editAdmin",passportSt.checkAuth,ctl.editAdmin)
 route.post("/updateAdmin",passportSt.checkAuth,multer,ctl.updateAdmin)
 route.get("/deleteAdmin",passportSt.checkAuth,ctl.deleteAdmin)
+route.get("/changePass",passportSt.checkAuth,ctl.changePass)
+route.post("/changePass",passportSt.checkAuth,ctl.changePassword)
+route.get("/forgetPass",ctl.forgetPassword)
+route.post("/forgetPass",ctl.lostpass)
+route.post("/verifyPass",ctl.verifyPassword)
+
 
 module.exports = route;

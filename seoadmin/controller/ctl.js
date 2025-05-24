@@ -1,4 +1,5 @@
 const schema = require("../model/schema")
+const mailer = require("../middleware/mailer")
 const fs = require("fs")
 
 module.exports.login = (req, res) => {
@@ -76,6 +77,39 @@ module.exports.updateAdmin = async (req, res) => {
  
 }
 
+module.exports.changePass = (req,res) =>{
+  res.render("changePass");
+}
+
+module.exports.changePassword = async (req,res) =>{
+  let admin = req.user;
+ 
+  if(admin.password == req.body.oldPass)
+  {
+      if(req.body.oldPass != req.body.newPass)
+      {
+           if(req.body.newPass == req.body.confirmPass)
+           {
+               await schema.findByIdAndUpdate(admin.id,{password:req.body.newPass}).then(()=>{
+                res.redirect("/logout")
+                
+               })
+           }
+           else{
+            res.redirect("/changePass")
+           }
+      }
+      else{
+        res.redirect("/changePass")
+      }
+  }else{
+    res.redirect("/changePass")
+  }
+}
+
+module.exports.forgetPassword = (req,res)=>{
+  res.render("forgetPass");
+}
 
 module.exports.logout = (req, res) => {
   req.session.destroy((err)=>{
@@ -87,4 +121,46 @@ module.exports.logout = (req, res) => {
    }
   });
  res.redirect("/");
+}
+
+
+module.exports.lostpass = async (req,res) =>{
+ let admin = await schema.findOne({email : req.body.email})
+
+ if(!admin)
+ {
+     return res.redirect("/")
+ }
+ let otp = Math.floor(Math.random()*1000 + 9000)
+
+ mailer.sendOTP(req.body.email,otp)
+ req.session.otp = otp
+ req.session.adminData = admin
+ res.render("verifyPass")  
+
+
+
+}
+
+module.exports.verifyPassword = async(req,res)=>{
+  let otp = req.session.otp
+  let admin = req.session.adminData
+
+  if(otp == req.body.otp)
+  {
+     if(req.body.newPass == req.body.confirmPass)
+           {
+               await schema.findByIdAndUpdate(admin._id,{password:req.body.newPass}).then(()=>{
+                res.redirect("/")
+                
+               })
+           }
+           else{
+
+            res.redirect("/")
+           }
+  }
+  else{
+    res.redirect("/")
+  }
 }

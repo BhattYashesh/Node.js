@@ -26,6 +26,10 @@ app.use(passport.initialize())
 
 
 app.use("/",require("./routes/route"))
+app.use("/category",require("./routes/category"))
+app.use("/subcategory",require("./routes/subCategory"))
+app.use("/product",require("./routes/product"))
+
 
 app.listen(port,(err)=>{
     err ? console.log(err):console.log("Server is started on this port" + port);
